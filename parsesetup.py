@@ -74,10 +74,11 @@ def _unsafe_parse_setup(setup_py_filename, mock_imports=False):
     sys.modules['__main__'].__file__ = setup_py_filename
 
     def parse():
-        exec(open(setup_py_filename).read(), {
-             "__name__": "__main__",
-             "__builtins__": __builtins__,
-             "__file__": setup_py_filename})
+        with open(setup_py_filename) as f:
+            exec(f.read(), {
+                 "__name__": "__main__",
+                 "__builtins__": __builtins__,
+                 "__file__": setup_py_filename})
 
     try:
         parse()
